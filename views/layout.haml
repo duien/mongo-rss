@@ -1,0 +1,20 @@
+!!!
+%html
+  %head
+    %title Mongo Bayesian RSS
+  %body
+    #header
+      #session
+        %p
+          - if session['user']
+            %p
+              logged in as
+              = session['user']
+            %p logged in as #{session['user']}
+            %p= "logged in as #{session['user']}"
+            %p
+              %a{:href => '/logout'} logout
+          - else
+            %p
+              %a{:href => '/login'} login
+    = yield
