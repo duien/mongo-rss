@@ -1,0 +1,10 @@
+#signup
+  %p Sign up for an account!
+  %form{:name => 'signup', :action => '/signup', :method => 'post'}
+    %p
+      Username
+      %input{:type => 'text', :name => 'user[user_name]'}
+    %p
+      Real Name
+      %input{:type => 'text', :name => 'user[real_name]'}
+    %input{:type => 'submit', :value => 'Sign Up'}

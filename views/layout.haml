@@ -2,6 +2,7 @@
 %html
   %head
     %title Mongo Bayesian RSS
+    %link{ :rel => 'stylesheet', :type => 'text/css', :href => '/style.css', :media => 'screen' }
   %body
     #header
       #session
@@ -9,12 +10,20 @@
           - if session['user']
             %p
               logged in as
-              = session['user']
-            %p logged in as #{session['user']}
-            %p= "logged in as #{session['user']}"
+              = session['user']['real_name']
             %p
               %a{:href => '/logout'} logout
           - else
             %p
               %a{:href => '/login'} login
-    = yield
+      #title
+        %h1 Mongo Bayesian RSS
+      #flash
+        - if flash[:error]
+          .error= flash[:error]
+        - if flash[:notice]
+          .notice= flash[:notice]
+    #content
+      = yield
+    #footer
+      %code&= session.inspect
