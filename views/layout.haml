@@ -17,7 +17,8 @@
             %p
               %a{:href => '/login'} login
       #title
-        %h1 Mongo Bayesian RSS
+        %a{ :href => '/' }
+          %h1 Mongo Bayesian RSS
       #flash
         - if flash[:error]
           .error= flash[:error]
