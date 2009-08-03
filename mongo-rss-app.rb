@@ -20,13 +20,13 @@ class MongoRSS < Sinatra::Base
   # Manage your sessions here, folks!
 
   get '/login/?' do
-    haml :login
+    custom_haml :login
   end
 
   get '/logout/?' do
     session.clear
     flash[:notice] = 'Logged out'
-    haml :logout
+    redirect '/welcome'
   end
 
   post '/login/?' do
@@ -42,7 +42,7 @@ class MongoRSS < Sinatra::Base
   end
 
   get '/signup/?' do
-    haml :signup
+    custom_haml :signup
   end
 
   post '/signup/?' do
@@ -59,11 +59,11 @@ class MongoRSS < Sinatra::Base
 
    get '/' do
     redirect '/welcome' unless session['user']
-    haml :index
+    custom_haml :index
   end
 
   get '/welcome/?' do
-    haml :welcome
+    custom_haml :welcome
   end
 
   # Other
@@ -80,10 +80,8 @@ class MongoRSS < Sinatra::Base
     session[:flash] ||= {}
   end
   
-  alias :original_haml :haml
-
-  def haml(*args)
-    render_result = original_haml(*args)
+  def custom_haml(*args)
+    render_result = haml(*args)
     flash.clear
     render_result
   end
