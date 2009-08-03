@@ -1,7 +1,7 @@
 require 'rubygems'
 require 'sinatra/base'
-require 'mongomapper'
 require 'haml'
+require 'sass'
 
 require_base = File.join( File.dirname( __FILE__ ), 'lib' )
 require File.join( require_base, 'user' )
