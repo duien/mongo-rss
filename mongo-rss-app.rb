@@ -66,6 +66,12 @@ class MongoRSS < Sinatra::Base
     custom_haml :welcome
   end
 
+  get '/feeds/?' do
+    @feeds = Feed.find(session['user']['feeds'])
+    # @feeds = []
+    custom_haml :feeds
+  end
+
   # Other
   
   get '/:style.css' do

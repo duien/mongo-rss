@@ -1,0 +1,5 @@
+%h1 Feeds
+%p You are subscribed to the following feeds:
+%ul
+  - @feeds.each do |feed|
+    %li= feed[:title]
