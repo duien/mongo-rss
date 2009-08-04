@@ -7,6 +7,7 @@ require_base = File.join( File.dirname( __FILE__ ), 'lib' )
 require File.join( require_base, 'user' )
 require File.join( require_base, 'feed' )
 require File.join( require_base, 'item' )
+require File.join( require_base, 'subscription' )
 
 class MongoRSS < Sinatra::Base
   

@@ -6,7 +6,8 @@ class User
   # database 'mongo-rss'
   key :user_name, String
   key :real_name, String
-  key :feeds, Array, :default => []
+
+  many :subscriptions
 
   # STUB - fix the tests once removed
   attr_accessor :items
@@ -27,4 +28,5 @@ class User
     order = options[:order] || :hottest
     @items    # TODO: implement this
   end
+  
 end
