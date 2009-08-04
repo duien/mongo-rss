@@ -67,10 +67,10 @@ class MongoRSS < Sinatra::Base
     custom_haml :welcome
   end
 
-  get '/feeds/?' do
-    @feeds = Feed.find(session['user']['feeds'])
+  get '/subscriptions/?' do
+    @subscriptions = session['user'].subscriptions
     # @feeds = []
-    custom_haml :feeds
+    custom_haml :subscriptions
   end
 
   # Other

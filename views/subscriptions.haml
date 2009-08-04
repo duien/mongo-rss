@@ -1,0 +1,5 @@
+%h1 Subscriptions
+%p You are subscribed to the following feeds:
+%ul
+  - @subscriptions.each do |sub|
+    %li= sub.feed.title
