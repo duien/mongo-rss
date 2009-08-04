@@ -12,9 +12,9 @@ class User
   attr_accessor :items
 
   SORTING_STRATEGIES = {
-#   :hottest => lambda { |a, b| a.},
-#   :newest => lambda {},
-#   :oldest => lambda {},
+    :hottest => lambda { |a, b| 0 },
+    :newest => lambda { |a, b| b.published_at <=> a.published_at },
+    :oldest => lambda { |a, b| a.published_at <=> b.published_at },
     :unordered => lambda { |a, b| 0 }
   }
 
@@ -25,6 +25,12 @@ class User
   #
   def unread_items (options = {})
     order = options[:order] || :hottest
-    @items    # TODO: implement this
+    raise "Invalid ordering '#{order.to_s}' on unread items" if !SORTING_STRATEGIES.key?(order)
+    @items.sort { |a, b| SORTING_STRATEGIES[order].call(a, b) }
+  end
+
+  # Mark an item as read, and as having taken a certain amount of time to read.
+  #
+  def read ( item, time )
   end
 end
