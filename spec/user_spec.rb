@@ -53,7 +53,7 @@ describe User do
 
       it "should order the items by hotness" do
         pending "implement hotness signatures" do
-          @user.unread_items( :order => :hottest ).should eql [ @items[4], @items[0], @items[2], @items[1], @items[3] ]
+          @user.unread_items( :order => :hottest ).should eql [ @items[4], @items[0], @items[2], @items[3], @items[1] ]
         end
       end
 
