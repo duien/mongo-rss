@@ -93,4 +93,11 @@ class MongoRSS < Sinatra::Base
     render_result
   end
 
+  def nav_link( target, title )
+    # haml_concat "%a{ :href => '#{target}', :class => request.path_info == '#{target}' ? 'current' : nil } #{title}"
+    haml_tag :li, :< do
+      haml_tag :a, title, :<,  { :href => target, :class => request.path_info == target ? 'current' : nil }
+    end
+  end
+
 end

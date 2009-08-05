@@ -26,10 +26,8 @@
           .notice= flash[:notice]
     #navigation
       %ul
-        %li< 
-          %a{ :href => '/', :class => request.path_info == '/' ? 'current' : nil } Home
-        %li<
-          %a{ :href => '/subscriptions', :class => request.path_info == '/subscriptions' ? 'current' : nil } Subscriptions
+        - nav_link( '/', 'Home' )
+        - nav_link( '/subscriptions', 'Subscriptions' )
     #content
       = yield
     #footer
