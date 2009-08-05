@@ -1,7 +1,7 @@
 require 'mongomapper'
 
 class Item
-  include MongoMapper::Document
+  include MongoMapper::EmbeddedDocument
 
   # database 'mongo-rss'
   key :guid, String  # This refers to the id provided by the feed, not the database id
