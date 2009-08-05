@@ -76,8 +76,26 @@ class MongoRSS < Sinatra::Base
   # Other
   
   get '/:style.css' do
-    content_type 'text/css'
-    sass params[:style].to_sym
+    begin
+      content_type 'text/css'
+      sass params[:style].to_sym
+    rescue Errno::ENOENT
+      pass
+    end
+  end
+
+  # Filters
+
+  before do
+    puts "in the before filter"
+    path_regex = %r{^/(welcome|login|.*\.css|$)}
+    puts "[logged_in?]#{logged_in?} [path match]#{request.path_info =~ path_regex}"
+    unless logged_in? or request.path_info =~ path_regex
+      flash[:error] = 'You must be logged in'
+      session[:login_should_redirect] = request.path_info
+      request.path_info = '/login'
+    end
+    
   end
 
   # Helpers
