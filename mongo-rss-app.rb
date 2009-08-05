@@ -36,9 +36,9 @@ class MongoRSS < Sinatra::Base
       flash[:error] = 'Unable to find account. Please sign up for a new account'
       redirect '/signup'
     else
-      session['user'] = user.first
+      session[:user] = user.first
       flash[:notice] = 'Logged in'
-      redirect '/'
+      redirect session[:login_should_redirect] ? session.delete(:login_should_redirect) : '/'
     end
   end
 
@@ -59,7 +59,7 @@ class MongoRSS < Sinatra::Base
   # Actual stuff
 
    get '/' do
-    redirect '/welcome' unless session['user']
+    redirect '/welcome' unless session[:user]
     custom_haml :index
   end
 
@@ -68,7 +68,7 @@ class MongoRSS < Sinatra::Base
   end
 
   get '/subscriptions/?' do
-    @subscriptions = session['user'].subscriptions
+    @subscriptions = session[:user].subscriptions
     # @feeds = []
     custom_haml :subscriptions
   end
@@ -116,6 +116,10 @@ class MongoRSS < Sinatra::Base
     haml_tag :li, :< do
       haml_tag :a, title, :<,  { :href => target, :class => request.path_info == target ? 'current' : nil }
     end
+  end
+
+  def logged_in?
+    not session[:user].nil?
   end
 
 end
