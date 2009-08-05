@@ -8,13 +8,13 @@
       #session
         %p
           - if session['user']
-            %p
+            %p<
               logged in as
               = session['user']['real_name']
-            %p
+            %p<
               %a{:href => '/logout'} logout
           - else
-            %p
+            %p<
               %a{:href => '/login'} login
       #title
         %a{ :href => '/' }
@@ -24,6 +24,12 @@
           .error= flash[:error]
         - if flash[:notice]
           .notice= flash[:notice]
+    #navigation
+      %ul
+        %li< 
+          %a{ :href => '/', :class => request.path_info == '/' ? 'current' : nil } Home
+        %li<
+          %a{ :href => '/subscriptions', :class => request.path_info == '/subscriptions' ? 'current' : nil } Subscriptions
     #content
       = yield
     #footer
