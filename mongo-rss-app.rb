@@ -15,7 +15,7 @@ class MongoRSS < Sinatra::Base
     MongoMapper.database = 'mongo-rss'
   end
 
-  enable :sessions
+  enable :sessions, :static
   set :root, File.dirname( __FILE__ )
 
   # Manage your sessions here, folks!
@@ -27,7 +27,7 @@ class MongoRSS < Sinatra::Base
   get '/logout/?' do
     session.clear
     flash[:notice] = 'Logged out'
-    redirect '/welcome'
+    redirect '/'
   end
 
   post '/login/?' do
@@ -58,16 +58,16 @@ class MongoRSS < Sinatra::Base
 
   # Actual stuff
 
-   get '/' do
-    redirect '/welcome' unless session[:user]
-    custom_haml :index
-  end
-
-  get '/welcome/?' do
-    custom_haml :welcome
+  get '/' do
+    if logged_in?
+      custom_haml :index
+    else
+      custom_haml :welcome
+    end
   end
 
   get '/subscriptions/?' do
+    login_required!
     @subscriptions = session[:user].subscriptions
     # @feeds = []
     custom_haml :subscriptions
@@ -86,17 +86,16 @@ class MongoRSS < Sinatra::Base
 
   # Filters
 
-  before do
-    puts "in the before filter"
-    path_regex = %r{^/(welcome|login|.*\.css|$)}
-    puts "[logged_in?]#{logged_in?} [path match]#{request.path_info =~ path_regex}"
-    unless logged_in? or request.path_info =~ path_regex
-      flash[:error] = 'You must be logged in'
-      session[:login_should_redirect] = request.path_info
-      request.path_info = '/login'
-    end
-    
-  end
+  # before do
+  #   puts "in the before filter"
+  #   path_regex = %r{^/(signup|login|.*\.css|$)}
+  #   puts "[logged_in?]#{logged_in?} [path match]#{request.path_info =~ path_regex}"
+  #   unless logged_in? or request.path_info =~ path_regex
+  #     flash[:error] = 'You must be logged in'
+  #     session[:login_should_redirect] = request.path_info
+  #     request.path_info = '/login'
+  #   end
+  # end
 
   # Helpers
   
@@ -120,6 +119,14 @@ class MongoRSS < Sinatra::Base
 
   def logged_in?
     not session[:user].nil?
+  end
+  
+  def login_required!
+    unless logged_in?
+      flash[:error] = 'You must be logged in'
+      session[:login_should_redirect] = request.path
+      redirect '/login'
+    end
   end
 
 end
