@@ -1,7 +1,16 @@
 // colors
 !header_back = #eeeeee
 !body_back = #ffffff
-!tab_border = #dddddd
+// !tab_border = #dddddd
+// !background_tab = #cccccc
+!background_tab = #e0e040
+!site_name = #e0a020
+!tab_border = #c0c040
+!tab_highlight = !tab_border
+!flash_notice_border = #c0c040
+!flash_notice_fill = #e0e040
+!flash_error_border = #f83020
+!flash_error_fill = #fd855b
 
 body
   font-family: 'Georgia', serif
@@ -11,11 +20,20 @@ body
 
 #header
   background = !header_back
-  padding: 10px
+  padding: 5px 10px
+  margin: 0
 
-#title 
-  a:link, a:visited
-    color: black
+#title
+  img
+    vertical-align: middle
+    border: none
+  h1
+    color = !site_name
+    font-family: 'Arial Rounded MT Bold', 'Arial Black', 'Arial', sans-serif
+    font-size: 300%
+    margin: 20px 0
+  a
+    text-decoration: none
 
 #session
   float: right
@@ -31,11 +49,11 @@ body
   padding: 10px
   border: 2px solid black
 #flash div.notice
-  background: #ccff99
-  border-color: #00ff00
+  background = !flash_notice_fill
+  border-color = !flash_notice_border
 #flash div.error
-  background: #ffcc99
-  border-color: #ff0000
+  background = !flash_error_fill
+  border-color = !flash_error_border
 
 #navigation
   background = !header_back
@@ -50,19 +68,21 @@ body
     display: inline
     margin-left: 5px
     a
-      background = !tab_border
+      background = !background_tab
       margin: 5px 0 5px 15px
-      padding: 5px 20px 9px
+      padding: 5px 20px 5px
       border = 4px solid !tab_border
-      border-bottom: none
+      // border-bottom: none
       color: black
       text-decoration: none
       &:hover
-        background = !body_back
-        border-bottom = 4px solid !tab_border
-        padding-bottom: 5px
+        background = !tab_highlight
+        // border-bottom = 4px solid !tab_border
+        // padding-bottom: 5px
     a.current
       background = !body_back
+      border-bottom: none
+      padding-bottom: 9px
       &:hover
         border-bottom: none
         padding-bottom: 9px
