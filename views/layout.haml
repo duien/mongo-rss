@@ -29,18 +29,27 @@
           %h1
             %img{ :src => '/mongo_leaf.png' }
             Mango RSS
-    #navigation
-      - if logged_in?
+    #body
+      #navigation
+        - if logged_in?
+          %ul
+            - nav_link( '/', 'Home' )
+            - nav_link( '/subscriptions', 'Subscriptions' )
+            - nav_link( '/feeds', 'Feeds' )
+      #content
+        #flash
+          - if flash[:error]
+            .error= flash[:error]
+          - if flash[:notice]
+            .notice= flash[:notice]
+        = yield
+    #sidebar
+      %ul
+        %li header
         %ul
-          - nav_link( '/', 'Home' )
-          - nav_link( '/subscriptions', 'Subscriptions' )
-          - nav_link( '/feeds', 'Feeds' )
-    #content
-      #flash
-        - if flash[:error]
-          .error= flash[:error]
-        - if flash[:notice]
-          .notice= flash[:notice]
-      = yield
+          %li subhead
+          %ul
+            %li body
+
     #footer
       %code&= session.inspect
