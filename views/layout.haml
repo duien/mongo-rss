@@ -30,12 +30,6 @@
             %img{ :src => '/mongo_leaf.png' }
             Mango RSS
     #body
-      #navigation
-        - if logged_in?
-          %ul
-            - nav_link( '/', 'Home' )
-            - nav_link( '/subscriptions', 'Subscriptions' )
-            - nav_link( '/feeds', 'Feeds' )
       #content
         #flash
           - if flash[:error]
@@ -45,11 +39,16 @@
         = yield
     #sidebar
       %ul
-        %li header
+        %li Navigation
         %ul
-          %li subhead
+          - nav_link( '/', 'Home' )
+          - nav_link( '/subscriptions', 'Subscriptions' )
+          - nav_link( '/feeds', 'Feeds' )
+        %li Feeds
+        %ul
+          %li A folder
           %ul
-            %li body
+            %li A feed
 
     #footer
       %code&= session.inspect
