@@ -38,17 +38,18 @@
             .notice= flash[:notice]
         = yield
     #sidebar
-      %ul
-        %li Navigation
+      #navigation
         %ul
           - nav_link( '/', 'Home' )
           - nav_link( '/subscriptions', 'Subscriptions' )
           - nav_link( '/feeds', 'Feeds' )
-        %li Feeds
+      #feed_menu
         %ul
-          %li A folder
+          %li Feeds
           %ul
-            %li A feed
+            %li A folder
+            %ul
+              %li A feed
 
     #footer
       %code&= session.inspect
