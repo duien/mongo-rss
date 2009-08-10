@@ -12,11 +12,9 @@ class HotnessSignature
 
   belongs_to :user
   key :word_hotness, Hash
-  key :total_words, Integer
 
   def after_create # :nodoc:
     word_hotness = Hash.new(0)
-    total_words = 0
 
     @options = {
       :language => 'en',
@@ -32,7 +30,6 @@ class HotnessSignature
   def train (text, weight)
     word_hash(text).each do |word, count|
       word_hotness[word] += (count * weight)
-      total_words        += count
     end
   end
 
