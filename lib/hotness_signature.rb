@@ -5,7 +5,7 @@
 # text.
 
 require 'mongomapper'
-require ''
+require 'lingua/stemmer'
 
 class HotnessSignature
   include MongoMapper::EmbeddedDocument
@@ -13,14 +13,10 @@ class HotnessSignature
   belongs_to :user
   key :word_hotness, Hash
 
-  def after_create # :nodoc:
-    word_hotness = Hash.new(0)
-
-    @options = {
-      :language => 'en',
-      :encoding => 'UTF_8'
-    }
-  end
+  @@options = {
+    :language => 'en',
+    :encoding => 'UTF_8'
+  }
 
   # Train the signature with a particular corpus of text.  The weight should be
   # how "hot" this text is considered - for particularly awesome text, set the
@@ -28,20 +24,26 @@ class HotnessSignature
   # matter so much as long as "high" is higher than "low".
   #
   def train (text, weight)
+    @word_hotness ||= Hash.new(0) # HACK! no after_initialize callback?
+
     word_hash(text).each do |word, count|
-      word_hotness[word] += (count * weight)
+      @word_hotness[word] += (count * weight)
     end
   end
 
   # Return a hotness score for a given corpus of text, based on previous
   # training.
   #
-  def predicted_hotness (text)
+  def predict (text)
+    @word_hotness ||= Hash.new(0) # HACK! no after_initialize callback?
+
     score = 0
-    total = category_words.values.sum
-    word_hash(text).each do |word, count|
-      s = word_hotness.has_key?(word) ? category_words[word] : 0.1
-      score += Math.log(s/total.to_f)
+    words = word_hash(text)
+    total_word_count = words.values.sum
+    words.each do |word, count|
+      next unless @word_hotness.has_key?(word)
+      this_score = Math.log( @word_hotness[word].abs * count / total_word_count )
+      score += ( @word_hotness[word] > 0 ) ? this_score : this_score * -1
     end
 
     return score
@@ -53,13 +55,12 @@ class HotnessSignature
   #
   def word_hash ( text )
     words = text.gsub(/[^\w\s]/,"").split + text.gsub(/[\w]/," ").split
-    stemmer = Lingua::Stemmer.new(@options)
+    stemmer = Lingua::Stemmer.new(@@options)
     d = Hash.new
-    skip_words = SKIP_WORDS[@options[:language]] || []
     words.each do |word|
       word = word.mb_chars.downcase.to_s if word =~ /[\w]+/
         key = stemmer.stem(word).intern
-      if word =~ /[^\w]/ || ! skip_words.include?(word) && word.length > 2
+      if word =~ /[^\w]/ || ! SKIP_WORDS.include?(word) && word.length > 2
         d[key] ||= 0
         d[key] += 1
       end
