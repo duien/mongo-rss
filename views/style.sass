@@ -1,99 +1,168 @@
-// colors
-!header_back = #fdf2d3
-!body_back = #ffffff
-// !tab_border = #dddddd
-// !background_tab = #cccccc
-!background_tab = #e0e040
-// !site_name = #e0a020
-!site_name = #fabb20
-!tab_border = #c0c040
-!tab_highlight = !tab_border
-!flash_notice_border = #c0c040
-!flash_notice_fill = #e0e040
-!flash_error_border = #f83020
-!flash_error_fill = #fd855b
+// COLORS
+!orange       = #fabb20
+!orange_light = #fbd679
+!orange_pale  = #fdf2d4
+!white        = #ffffff
+!green        = #c0c040
+!green_light  = #e0e040
+!black        = #000000
+!red          = #f83020
+!red_light    = #fd855b
+
+// SITE STYLE COLORS
+!body_back            = !orange_pale
+!site_name            = !orange
+!content_back         = !white
+!tab_border           = !green
+!tab_back             = !green_light
+!tab_hover_back       = !green
+!tab_link             = !black
+!sidebar_border       = !orange
+!sidebar_header_back  = !orange_light
+!sidebar_subhead_back = !orange_pale
+!sidebar_back         = !white
+!sidebar_link         = !black
+!flash_error_border   = !red
+!flash_error_back     = !red_light
+!flash_notice_border  = !green
+!flash_notice_back    = !green_light
+
+// OTHER SITE VARIABLES
+!sidebar_width = 10%
+!content_width = 100% - !sidebar_width
+
+// FUNCTIONS
+=round-left
+  -moz-border-radius-topleft: 7px
+  -webkit-border-top-left-radius: 7px 
+  -moz-border-radius-bottomleft: 7px
+  -webkit-border-bottom-left-radius: 7px
+=round-right
+  -moz-border-radius-topright: 7px
+  -webkit-border-top-right-radius: 7px 
+  -moz-border-radius-bottomright: 7px
+  -webkit-border-bottom-right-radius: 7px
+// =rounded-corner( !y, !x, !radius )
+//   -moz-border-radius-#{!y}#{!x}: #{!radius}
+//   -webkit-border-#{y}-#{!x}-radius: #{!radius}
 
 body
   font-family: 'Georgia', serif
   margin: 0
   padding: 0
-  background = !header_back
-
-#header
-  background = !header_back
-  padding: 5px 10px
-  margin: 0
-
-#title
-  img
-    vertical-align: middle
-    border: none
-  h1
-    color = !site_name
-    font-family: 'Arial Rounded MT Bold', 'Arial Black', 'Arial', sans-serif
-    font-size: 300%
-    margin: 20px 0
-  a
-    text-decoration: none
-
-#session
-  float: right
-  text-align: right
-
-  p
-    padding: 0
-    margin: 0
-
-#flash div
-  display: block
-  margin: 10px
-  padding: 10px
-  border: 2px solid black
-#flash div.notice
-  background = !flash_notice_fill
-  border-color = !flash_notice_border
-#flash div.error
-  background = !flash_error_fill
-  border-color = !flash_error_border
-
-#navigation
-  background = !header_back
-  border-bottom = 4px solid !tab_border
-  font-family: 'Arial', sans-serif
-  font-size: 80%
-  ul
-    padding: 0
-    margin: 0
-    padding-bottom: 5px
-  li
-    display: inline
-    margin-left: 5px
-    a
-      background = !background_tab
-      margin: 5px 0 5px 15px
-      padding: 5px 20px 5px
-      border = 4px solid !tab_border
-      // border-bottom: none
-      color: black
-      text-decoration: none
-      &:hover
-        background = !tab_highlight
-        // border-bottom = 4px solid !tab_border
-        // padding-bottom: 5px
-    a.current
-      background = !body_back
-      border-bottom: none
-      padding-bottom: 9px
-      &:hover
-        border-bottom: none
-        padding-bottom: 9px
-
-#content
-  clear: both
-  padding: 10px
   background = !body_back
 
+div
+  margin: 0
+  padding: 0
+
+h1
+  margin: 10px 0
+
+#header
+  padding: 5px 10px
+
+  #title
+    padding-left = !sidebar_width
+    img
+      vertical-align: middle
+      border: none
+    h1
+      color = !site_name
+      font-family: 'Arial Rounded MT Bold', 'Arial Black', 'Arial', sans-serif
+      font-size: 300%
+      margin: 10px 0
+    a
+      text-decoration: none
+
+  #session
+    float: right
+    text-align: right
+    p
+      padding: 0
+      margin: 0
+
+#body
+  float: right
+  width = !content_width
+
+  #content
+    padding: 10px 20px
+    background = !body_back
+    border = 4px solid !tab_border
+    border-right: none
+    +round-left
+    background = !content_back
+    min-height: 300px
+    
+    #flash div
+      margin: 10px
+      padding: 10px
+      border: 2px solid black
+      &.notice
+        background = !flash_notice_back
+        border-color = !flash_notice_border
+      &.error
+        background = !flash_error_back
+        border-color = !flash_error_border
+
+#sidebar
+  width = !sidebar_width
+  float: right
+  a
+    // font-family: 'Arial', sans-serif
+    font-family: 'Arial Rounded MT Bold', 'Arial Black', 'Arial', sans-serif
+    font-size: 80%
+    // font-weight: bold
+  #navigation
+    margin-top: 15px
+    ul
+      margin: 0
+      padding: 0
+      li
+        display: block
+        a
+          display: block
+          border = 4px solid !tab_border
+          border-right: none
+          padding: 3px 10px
+          margin: 5px 0px 5px 20px
+          background = !tab_back
+          // +rounded-corner( "top", "left", "7px" )
+          // +rounded-corner( "bottom", "left", "7px" )
+          +round-left
+          color = !sidebar_link
+          text-decoration: none
+          &:hover
+            background = !tab_hover_back
+          &.current
+            background = !content_back
+            margin-right: -4px
+
+  #feed_menu
+    margin: 15px 10px 10px 0
+    +round-right
+    border = 4px solid !sidebar_border
+    border-left: none
+    font-family: 'Arial Rounded MT Bold', 'Arial Black', 'Arial', sans-serif
+    font-size: 80%
+    background = !sidebar_back
+    ul
+      margin: 0
+      padding: 0
+      li
+        display: block
+        background = !sidebar_header_back
+        padding: 3px 5px
+      ul
+        li
+          background = !sidebar_subhead_back
+        ul
+          li
+            font-family: 'Arial', sans-serif
+            background = !sidebar_back
+    a
+
 #footer
-  border-top = 4px solid !tab_border
+  clear: both
   padding: 10px
-  background = !header_back
