@@ -44,7 +44,7 @@ describe User do
       @user.unread_items( :order => :newest ).should eql @items.reverse
     end
 
-    context "with a hotness signature" do
+    context "with a trained hotness signature" do
       before do
         crappy_item = Item.new( :body => "Politics boring sucks" )
         groovy_item = Item.new( :body => "Books books card games games interesting love" )
