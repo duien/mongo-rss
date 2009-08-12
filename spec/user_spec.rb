@@ -10,6 +10,10 @@ describe User do
     @user = User.new
   end
 
+  it "should have a hotness signature" do
+    @user.hotness_signature.should be_an_instance_of HotnessSignature
+  end
+
   it "should be able to read an item" do
     @user.read( Item.new( :body => "Some text!" ), 10 )
   end
