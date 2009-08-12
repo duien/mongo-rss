@@ -40,16 +40,10 @@
     #sidebar
       #navigation
         %ul
-          - nav_link( '/', 'Home' )
-          - nav_link( '/subscriptions', 'Subscriptions' )
-          - nav_link( '/feeds', 'Feeds' )
-      #feed_menu
-        %ul
-          %li Feeds
-          %ul
-            %li A folder
-            %ul
-              %li A feed
-
+          - nav_link( '/', 'Read' )
+          - nav_link( '/feeds', 'Explore' )
+          - nav_link( '/subscriptions', 'Manage' )
+      - if @show_feed_menu
+        = haml :feed_menu, :layout => false
     #footer
       %code&= session.inspect
