@@ -7,12 +7,17 @@ class User
   include MongoMapper::Document
 
   # database 'mongo-rss'
-  key :user_name, String
-  key :real_name, String
+  key :user_name, String, :required => true
+  key :real_name, String, :required => true
   key :hotness_signature, HotnessSignature
 
   many :subscriptions
 
+  def initialize( attrs = {} )
+    super attrs
+    self.hotness_signature ||= HotnessSignature.new
+  end
+  
   # STUB - fix the tests once removed
   attr_accessor :items
 
@@ -29,8 +34,6 @@ class User
   #     :order => one of :newest, :oldest, :hottest, or :unordered
   #
   def unread_items (options = {})
-    @hotness_signature ||= HotnessSignature.new # HACK! No after_initialize callback?
-
     order = options[:order] || :hottest
     raise "Invalid ordering '#{order.to_s}' on unread items" if !SORTING_STRATEGIES.key?(order)
     @items.sort_by { |i| SORTING_STRATEGIES[order].call(i, self) }
@@ -42,8 +45,7 @@ class User
     # TODO: come up with a better determination of item weight
     weight = time
 
-    @hotness_signature ||= HotnessSignature.new # HACK! No after_initialize callback?
-    @hotness_signature.train( item.body, weight )
+    hotness_signature.train( item.body, weight )
   end
   
 end

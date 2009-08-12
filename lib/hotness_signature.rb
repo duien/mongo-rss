@@ -10,7 +10,6 @@ require 'lingua/stemmer'
 class HotnessSignature
   include MongoMapper::EmbeddedDocument
 
-  belongs_to :user
   key :word_hotness, Hash
 
   @@options = {
@@ -24,10 +23,9 @@ class HotnessSignature
   # matter so much as long as "high" is higher than "low".
   #
   def train (text, weight)
-    @word_hotness ||= Hash.new(0) # HACK! no after_initialize callback?
-
     word_hash(text).each do |word, count|
-      @word_hotness[word] += (count * weight)
+      word_hotness[word] ||= 0
+      word_hotness[word] += (count * weight) 
     end
   end
 
@@ -35,15 +33,13 @@ class HotnessSignature
   # training.
   #
   def predict (text)
-    @word_hotness ||= Hash.new(0) # HACK! no after_initialize callback?
-
     score = 0
     words = word_hash(text)
     total_word_count = words.values.sum
     words.each do |word, count|
-      next unless @word_hotness.has_key?(word)
-      this_score = Math.log( @word_hotness[word].abs * count / total_word_count )
-      score += ( @word_hotness[word] > 0 ) ? this_score : this_score * -1
+      next unless word_hotness.has_key?(word)
+      this_score = Math.log( word_hotness[word].abs * count / total_word_count )
+      score += ( word_hotness[word] > 0 ) ? this_score : this_score * -1
     end
 
     return score
