@@ -15,16 +15,16 @@ describe User do
   end
 
   it "should be able to read an item" do
-    @user.read( Item.new( :body => "Some text!" ), 10 )
+    @user.read( Item.new( :content => "Some text!" ), 10 )
   end
 
   context "with unread items" do
     before do
-      @items = [ Item.new(:published_at => Time.at(100), :body => "Card games are interesting."),
-                 Item.new(:published_at => Time.at(200), :body => "Politics are boring."),
-                 Item.new(:published_at => Time.at(300), :body => "Books are also interesting."),
-                 Item.new(:published_at => Time.at(400), :body => "Politics are still boring and they suck."),
-                 Item.new(:published_at => Time.at(500), :body => "Books and games are still interesting and I love them.")
+      @items = [ Item.new(:published_at => Time.at(100), :content => "Card games are interesting."),
+                 Item.new(:published_at => Time.at(200), :content => "Politics are boring."),
+                 Item.new(:published_at => Time.at(300), :content => "Books are also interesting."),
+                 Item.new(:published_at => Time.at(400), :content => "Politics are still boring and they suck."),
+                 Item.new(:published_at => Time.at(500), :content => "Books and games are still interesting and I love them.")
                ]
 
       # TODO: once User#items is removed, refactor this
@@ -50,8 +50,8 @@ describe User do
 
     context "with a hotness signature" do
       before do
-        crappy_item = Item.new( :body => "Politics boring sucks" )
-        groovy_item = Item.new( :body => "Books books card games games interesting love" )
+        crappy_item = Item.new( :content => "Politics boring sucks" )
+        groovy_item = Item.new( :content => "Books books card games games interesting love" )
 
         @user.read crappy_item, 3     # We blew past this crappy article in 3 seconds
         @user.read groovy_item, 300   # We spent five minutes reading this groovy one
