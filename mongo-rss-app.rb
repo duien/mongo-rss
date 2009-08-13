@@ -79,6 +79,12 @@ class MongoRSS < Sinatra::Base
     custom_haml :feeds
   end
 
+  get '/feeds/:id/items/?' do
+    login_required!
+    @feed = Feed.find( params[:id] )
+    custom_haml :feed_items
+  end
+
   # Other
   
   get '/:style.css' do

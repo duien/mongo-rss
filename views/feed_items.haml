@@ -1,0 +1,7 @@
+%h1 Items in the feed #{@feed.title}
+%ul
+  - @feed.items.each do |item|
+    %li
+      %h2
+        %a{ :href => item.link }= item.title
+      = item.body

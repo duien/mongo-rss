@@ -3,4 +3,8 @@
 
 %ul
   - @feeds.each do |feed|
-    %li= feed.title
+    %li
+      = feed.title
+      %a{ :href => "/feeds/#{feed.id}/items" }= "(#{feed.items.length} items)"
+      %br
+      %code&= feed.url
