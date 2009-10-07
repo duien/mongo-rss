@@ -54,7 +54,7 @@ class Feed
         @feedzirra.feed_url = url
         @feedzirra.last_modified = last_modified
         @feedzirra.etag = etag
-        @feedzirra.entries = items.last
+        # @feedzirra.entries = items.sort_by{ |i| i.published_at }.last(1)
       else
         @feedzirra = Feedzirra::Feed.fetch_and_parse( url )
         do_first_update

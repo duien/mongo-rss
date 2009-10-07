@@ -24,7 +24,7 @@ class Item
       :content => entry.content,
       :summary => entry.summary,
       :categories => entry.categories,
-      :links => entry.links,
+      :links => (entry.respond_to?(:links) ? entry.links : [] ),
       :updated_at => entry.updated,
       :published_at => entry.published
     )
