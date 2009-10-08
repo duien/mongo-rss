@@ -2,6 +2,7 @@ require 'mongomapper'
 
 require_base = File.dirname( __FILE__ )
 require File.join( require_base, 'hotness_signature' )
+require File.join( require_base, 'subscription' )
 
 class User
   include MongoMapper::Document
@@ -28,6 +29,20 @@ class User
     :unordered => lambda { |i, u| 0 }
   }
 
+  def feeds
+    subscriptions.collect { |s| s.feed }
+  end
+
+  def items
+    feeds.inject([]) { | items, feed | items + feed.items }
+  end
+
+  def subscribe (feed)
+    return if feeds.include? feed
+    s = Subscription.new(:feed => feed)
+    subscriptions << s
+  end
+
   # All the unread items from all of this user's feeds.  The options hash can
   # take the following keys:
   #
@@ -36,7 +51,7 @@ class User
   def unread_items (options = {})
     order = options[:order] || :hottest
     raise "Invalid ordering '#{order.to_s}' on unread items" if !SORTING_STRATEGIES.key?(order)
-    @items.sort_by { |i| SORTING_STRATEGIES[order].call(i, self) }
+    items.sort_by { |i| SORTING_STRATEGIES[order].call(i, self) }
   end
 
   # Mark an item as read, and as having taken a certain amount of time to read.
