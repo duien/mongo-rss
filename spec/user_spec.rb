@@ -46,11 +46,11 @@ describe User do
     end
 
     it "should order the items by oldest" do
-      @user.unread_items( :order => :oldest ).should eql @items
+      @user.unread_items( :order => :oldest ).should == @items
     end
 
     it "should order the items by newest" do
-      @user.unread_items( :order => :newest ).should eql @items.reverse
+      @user.unread_items( :order => :newest ).should == @items.reverse
     end
 
     context "with a trained hotness signature" do
@@ -63,7 +63,7 @@ describe User do
       end
 
       it "should order the items by hotness" do
-        @user.unread_items( :order => :hottest ).should eql [ @items[4], @items[0], @items[2], @items[1], @items[3] ]
+        @user.unread_items( :order => :hottest ).should == [ @items[4], @items[0], @items[2], @items[1], @items[3] ]
       end
 
     end
