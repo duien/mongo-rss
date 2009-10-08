@@ -34,4 +34,8 @@ class Item
     # content or summary as appropriate
     content || summary
   end
+
+  def inspect
+    "'#{body}'"
+  end
 end
