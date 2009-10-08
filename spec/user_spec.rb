@@ -2,7 +2,10 @@
 
 require File.join( File.dirname(__FILE__), '../lib/user.rb' )
 require File.join( File.dirname(__FILE__), '../lib/item.rb' )
+require File.join( File.dirname(__FILE__), '../lib/feed.rb' )
 require File.join( File.dirname(__FILE__), '../lib/hotness_signature.rb' )
+
+MongoMapper.database = 'mongo-rss'
 
 describe User do
 
@@ -28,7 +31,9 @@ describe User do
                ]
 
       # TODO: once User#items is removed, refactor this
-      @user.items = @items
+      feed = Feed.new
+      feed.items = @items
+      @user.subscribe(feed)
       @user.hotness_signature = HotnessSignature.new
     end
 
