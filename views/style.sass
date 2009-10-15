@@ -32,16 +32,27 @@
 !content_width = 100% - !sidebar_width
 
 // FUNCTIONS
-=round-left
+=round-none
+  -moz-border-radius: 0
+  -webkit-border-radius: 0
+=round-top-left
   -moz-border-radius-topleft: 7px
   -webkit-border-top-left-radius: 7px 
+=round-bottom-left
   -moz-border-radius-bottomleft: 7px
   -webkit-border-bottom-left-radius: 7px
-=round-right
+=round-left
+  +round-top-left
+  +round-bottom-left
+=round-top-right
   -moz-border-radius-topright: 7px
   -webkit-border-top-right-radius: 7px 
+=round-bottom-right
   -moz-border-radius-bottomright: 7px
   -webkit-border-bottom-right-radius: 7px
+=round-right
+  +round-top-right
+  +round-bottom-right
 // =rounded-corner( !y, !x, !radius )
 //   -moz-border-radius-#{!y}#{!x}: #{!radius}
 //   -webkit-border-#{y}-#{!x}-radius: #{!radius}
@@ -119,25 +130,43 @@ h1
     ul
       margin: 0
       padding: 0
+      // li
+      //   display: block
+      //   a
+      //     display: block
+      //     border = 4px "solid" !tab_border
+      //     border-right: none
+      //     padding: 3px 10px
+      //     margin: 5px 0px 5px 20px
+      //     background = !tab_back
+      //     // +rounded-corner( "top", "left", "7px" )
+      //     // +rounded-corner( "bottom", "left", "7px" )
+      //     +round-left
+      //     color = !sidebar_link
+      //     text-decoration: none
+      //     &:hover
+      //       background = !tab_hover_back
+      //     &.current
+      //       background = !content_back
+      //       margin-right: -4px
       li
-        display: block
+        :display block
+        border = 4px "solid" !tab_border
+        :border-right none
+        background = !tab_back
+        :margin 5px 0 5px 20px
+        +round-left
+        &.current
+          background= !content_back
+          :margin-right -4px
         a
-          display: block
-          border = 4px "solid" !tab_border
-          border-right: none
-          padding: 3px 10px
-          margin: 5px 0px 5px 20px
-          background = !tab_back
-          // +rounded-corner( "top", "left", "7px" )
-          // +rounded-corner( "bottom", "left", "7px" )
-          +round-left
+          :display block
+          :padding 3px 10px
           color = !sidebar_link
-          text-decoration: none
+          :text-decoration none
+          :padding-bottom 5px
           &:hover
             background = !tab_hover_back
-          &.current
-            background = !content_back
-            margin-right: -4px
 
   #feed_menu
     margin: 15px 10px 10px 0
