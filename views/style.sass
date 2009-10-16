@@ -168,29 +168,33 @@ h1
           &:hover
             background = !tab_hover_back
 
-  #feed_menu
-    margin: 15px 10px 10px 0
-    +round-right
-    border = 4px "solid" !sidebar_border
-    border-left: none
-    font-family: 'Arial Rounded MT Bold', 'Arial Black', 'Arial', sans-serif
-    font-size: 80%
-    background = !sidebar_back
+#feed_menu
+  margin: 0 20px 10px -10px
+  +round-right
+  +round-left
+  :width 150px
+  :height 100%
+  :float left
+  border = 4px "solid" !sidebar_border
+  // border-left: none
+  font-family: 'Arial Rounded MT Bold', 'Arial Black', 'Arial', sans-serif
+  font-size: 80%
+  background = !sidebar_back
+  ul
+    margin: 0
+    padding: 0
+    li
+      display: block
+      background = !sidebar_header_back
+      padding: 3px 5px
     ul
-      margin: 0
-      padding: 0
       li
-        display: block
-        background = !sidebar_header_back
-        padding: 3px 5px
+        background = !sidebar_subhead_back
       ul
         li
-          background = !sidebar_subhead_back
-        ul
-          li
-            font-family: 'Arial', sans-serif
-            background = !sidebar_back
-    a
+          font-family: 'Arial', sans-serif
+          background = !sidebar_back
+  a
 
 #footer
   clear: both

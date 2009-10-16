@@ -36,6 +36,8 @@
             .error= flash[:error]
           - if flash[:notice]
             .notice= flash[:notice]
+        - if @show_feed_menu
+          = haml :feed_menu, :layout => false
         = yield
     #sidebar
       #navigation
@@ -43,7 +45,7 @@
           - nav_link( '/', 'Read' )
           - nav_link( '/feeds', 'Explore' )
           - nav_link( '/subscriptions', 'Manage' )
-      - if @show_feed_menu
+      -# - if @show_feed_menu
         = haml :feed_menu, :layout => false
     #footer
       %code&= session.inspect
