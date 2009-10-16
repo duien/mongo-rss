@@ -4,7 +4,7 @@
 # then attempt to predict how much a user will like any other given piece of
 # text.
 
-require 'mongomapper'
+require 'mongo_mapper'
 require 'lingua/stemmer'
 
 class HotnessSignature

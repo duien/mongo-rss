@@ -1,4 +1,4 @@
-require 'mongomapper'
+require 'mongo_mapper'
 
 class Item
   include MongoMapper::EmbeddedDocument

@@ -1,4 +1,4 @@
-require 'mongomapper'
+require 'mongo_mapper'
 require 'feedzirra'
 require 'open-uri'
 

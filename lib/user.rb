@@ -1,4 +1,4 @@
-require 'mongomapper'
+require 'mongo_mapper'
 
 require_base = File.dirname( __FILE__ )
 require File.join( require_base, 'hotness_signature' )
