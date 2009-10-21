@@ -2,9 +2,6 @@
 
 require 'spec_helper'
 
-require File.join( File.dirname(__FILE__), '../lib/hotness_signature.rb' )
-require File.join( File.dirname(__FILE__), '../lib/user.rb' )
-
 describe HotnessSignature do
 
   before do

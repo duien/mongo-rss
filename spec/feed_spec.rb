@@ -2,9 +2,6 @@
 
 require 'spec_helper'
 
-require File.join( File.dirname(__FILE__), '../lib/feed.rb' )
-require File.join( File.dirname(__FILE__), '../lib/item.rb' )
-
 describe Feed do
 
   # I need to get the gem for mocking Net::HTTP calls before I can do much
