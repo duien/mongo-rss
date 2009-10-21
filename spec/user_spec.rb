@@ -1,11 +1,11 @@
 # user_spec.rb
 
+require 'spec_helper'
+
 require File.join( File.dirname(__FILE__), '../lib/user.rb' )
 require File.join( File.dirname(__FILE__), '../lib/item.rb' )
 require File.join( File.dirname(__FILE__), '../lib/feed.rb' )
 require File.join( File.dirname(__FILE__), '../lib/hotness_signature.rb' )
-
-MongoMapper.database = 'mongo-rss'
 
 describe User do
 

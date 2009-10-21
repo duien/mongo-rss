@@ -1,3 +1,7 @@
+# feed_spec.rb
+
+require 'spec_helper'
+
 require File.join( File.dirname(__FILE__), '../lib/feed.rb' )
 require File.join( File.dirname(__FILE__), '../lib/item.rb' )
 

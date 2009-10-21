@@ -1,5 +1,7 @@
 # hotness_signature_spec.rb
 
+require 'spec_helper'
+
 require File.join( File.dirname(__FILE__), '../lib/hotness_signature.rb' )
 require File.join( File.dirname(__FILE__), '../lib/user.rb' )
 
